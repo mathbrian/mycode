@@ -1,0 +1,27 @@
+from aip import AipOcr
+
+def get_file_content(filePath):
+    with open(filePath, 'rb') as fp:
+        return fp.read()
+
+""" 你的 APPID AK SK """
+APP_ID = ''
+API_KEY = ''
+SECRET_KEY = ''
+client = AipOcr(APP_ID, API_KEY, SECRET_KEY)
+img = get_file_content('card.jpg')
+res = client.basicGeneral(img)
+
+#得到图片中文字的行数
+num = res['words_result_num']
+#将列表中'words_result'所报包含的内容提取出来，num个字典
+word = res['words_result']
+#将识别出来的文字文本保存到"识别文本.txt"中
+def resq():
+    for i in range(0,num):
+        dic = word[i]
+        with open('result.txt', "a+", encoding="utf-8") as f:
+            f.write(dic['words'])
+
+if __name__ == '__main__':
+    resq()
